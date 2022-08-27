@@ -63,11 +63,6 @@ auto XlsxBuilder::build(const Result &res) const -> bool
 
 void XlsxBuilder::addTsSupport(int &row, QXlsx::Document &doc) const
 {
-    const auto appVersion       = qApp->applicationVersion();
-    const auto currentVersion   = QVersionNumber::fromString(appVersion);
-    const auto TsSupportVersion = QVersionNumber(4, 5, 0);
-    if (QVersionNumber::compare(currentVersion, TsSupportVersion) >= 0) {
-        doc.write(++row, 1, TitleHeader::TsVersion);
-        doc.write(++row, 1, m_ioParameter.tsVersion);
-    }
+    doc.write(++row, 1, TitleHeader::TsVersion);
+    doc.write(++row, 1, m_ioParameter.tsVersion);
 }

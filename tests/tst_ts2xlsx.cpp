@@ -11,7 +11,7 @@ auto scenario_simple() -> bool
     const auto inputFile{ FILESPATH + std::string("/scenario_simple.ts") };
     auto conv = ConverterFactory::make_converter(
         ConverterFactory::ConversionType::Ts2Xlsx, inputFile.c_str(),
-        output.c_str(), ";", "\"", "2.1");
+        output.c_str(), ";", "\"", "2.1", true, false);
     conv->process();
 
     QXlsx::Document xlsx(output.c_str());
@@ -47,7 +47,7 @@ auto scenario_multiLocation() -> bool
                           std::string("/scenario_multilocation.ts") };
     auto conv = ConverterFactory::make_converter(
         ConverterFactory::ConversionType::Ts2Xlsx, inputFile.c_str(),
-        output.c_str(), ";", "\"", "2.1");
+        output.c_str(), ";", "\"", "2.1", true, false);
     conv->process();
 
     QXlsx::Document xlsx(output.c_str());

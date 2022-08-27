@@ -16,11 +16,8 @@ auto XlsxParser::parse() const -> Result
     QXlsx::Document xlsx(m_ioParameter.inputFile);
 
     auto offsetRow{ 0 };
-    const auto appVersion       = qApp->applicationVersion();
-    const auto currentVersion   = QVersionNumber::fromString(appVersion);
-    const auto TsSupportVersion = QVersionNumber(4, 5, 0);
     InOutParameter p{ "", "", m_ioParameter.tsVersion, {} };
-    if (QVersionNumber::compare(currentVersion, TsSupportVersion) >= 0) {
+    if (xlsx.read(1, 1) == TitleHeader::TsVersion) {
         p.tsVersion = xlsx.read(2, 1).toString();
         offsetRow   = 2;
     }
