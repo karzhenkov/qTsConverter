@@ -19,43 +19,37 @@ XlsxBuilder::XlsxBuilder(InOutParameter parameter) :
 auto XlsxBuilder::build(const Result &res) const -> bool
 {
     QXlsx::Document xlsx;
-    int row{ 1 };
-    int col{ 1 };
+    int row = 0;
+    int col = 0;
 
     if (!m_ioParameter.noVersion) {
-        addTsSupport(row, col, xlsx);
+        addTsSupport(row, xlsx);
     }
 
-    xlsx.write(row, col, TitleHeader::Context);
-    ++col;
-    xlsx.write(row, col, TitleHeader::Source);
-    ++col;
-    xlsx.write(row, col, TitleHeader::Translation);
-    ++col;
+    ++row;
+    xlsx.write(row, ++col, TitleHeader::Context);
+    xlsx.write(row, ++col, TitleHeader::Source);
+    xlsx.write(row, ++col, TitleHeader::Translation);
     if (!m_ioParameter.noLocation) {
-        xlsx.write(row, col, TitleHeader::Location);
-        ++col;
+        xlsx.write(row, ++col, TitleHeader::Location);
     }
 
-    col = 1;
-    if (row == 1) {
-        ++row;
-    }
     for (const auto &tr : res.translantions) {
         for (const auto &msg : tr.messages) {
-            xlsx.write(row, col++, tr.name);
-            xlsx.write(row, col++, msg.source);
-            xlsx.write(row, col++, msg.translation);
+            col = 0;
+            ++row;
+
+            xlsx.write(row, ++col, tr.name);
+            xlsx.write(row, ++col, msg.source);
+            xlsx.write(row, ++col, msg.translation);
 
             if (!m_ioParameter.noLocation) {
                 for (const auto &loc : msg.locations) {
-                    xlsx.write(row, col++,
+                    xlsx.write(row, ++col,
                                QString(loc.first + " - " +
                                        QString::number(loc.second)));
                 }
             }
-            ++row;
-            col = 1;
         }
     }
 
@@ -67,15 +61,13 @@ auto XlsxBuilder::build(const Result &res) const -> bool
     return true;
 }
 
-void XlsxBuilder::addTsSupport(int &row, int &col, QXlsx::Document &doc) const
+void XlsxBuilder::addTsSupport(int &row, QXlsx::Document &doc) const
 {
     const auto appVersion       = qApp->applicationVersion();
     const auto currentVersion   = QVersionNumber::fromString(appVersion);
     const auto TsSupportVersion = QVersionNumber(4, 5, 0);
     if (QVersionNumber::compare(currentVersion, TsSupportVersion) >= 0) {
-        doc.write(row, col, TitleHeader::TsVersion);
-        ++row;
-        doc.write(row, col, m_ioParameter.tsVersion);
-        ++row;
+        doc.write(++row, 1, TitleHeader::TsVersion);
+        doc.write(++row, 1, m_ioParameter.tsVersion);
     }
 }
