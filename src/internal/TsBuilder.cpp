@@ -28,6 +28,10 @@ auto TsBuilder::build(const Result &res) const -> bool
     s.writeStartElement("TS");
     s.writeAttribute("version", res.params.tsVersion);
 
+    if (!m_ioParameter.language.isEmpty()) {
+      s.writeAttribute("language", m_ioParameter.language);
+    }
+
     for (const auto &ctxs : res.translantions) {
         s.writeStartElement("context");
         s.writeTextElement("name", ctxs.name);

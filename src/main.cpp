@@ -55,6 +55,9 @@ auto main(int argc, char **argv) -> int
     QCommandLineOption noLocation(
         "no-location", "do not print location information into output file");
     parser.addOption(noLocation);
+    QCommandLineOption language(
+        "language", "add language specification into ts output file", "language", "");
+    parser.addOption(language);
 
     parser.process(app);
 
@@ -63,7 +66,8 @@ auto main(int argc, char **argv) -> int
         CliRunner cli(std::move(args), {
             "", "", ";", "\"", "2.1",
             parser.isSet(noVersion),
-            parser.isSet(noLocation)
+            parser.isSet(noLocation),
+            parser.value(language)
         });
         return cli.run();
 #ifdef ONLY_CLI

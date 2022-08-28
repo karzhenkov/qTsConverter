@@ -16,11 +16,13 @@ struct InOutParameter {
     InOutParameter(
     	const QString &in, const QString &out, const QString &fieldSep,
     	const QString &stringSep, const QString &tsVersion,
-    	bool noVersion_ = false, bool noLocation_ = false)
+    	bool noVersion_ = false, bool noLocation_ = false,
+    	const QString& language_ = QString())
       :
     	inputFile(in), outputFile(out), tsVersion(tsVersion),
     	csvProperty(stringSep, fieldSep),
-    	noVersion(noVersion_), noLocation(noLocation_)
+    	noVersion(noVersion_), noLocation(noLocation_),
+    	language(language_)
     {
     }
 
@@ -34,4 +36,5 @@ struct InOutParameter {
     CsvProperty csvProperty;
     bool noVersion;
     bool noLocation;
+    QString language;
 };
