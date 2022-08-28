@@ -16,7 +16,7 @@ auto XlsxParser::parse() const -> Result
     QXlsx::Document xlsx(m_ioParameter.inputFile);
 
     auto offsetRow{ 0 };
-    InOutParameter p{ "", "", m_ioParameter.tsVersion, {} };
+    InOutParameter p{ m_ioParameter.tsVersion };
     if (xlsx.read(1, 1) == TitleHeader::TsVersion) {
         p.tsVersion = xlsx.read(2, 1).toString();
         offsetRow   = 2;

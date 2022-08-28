@@ -10,8 +10,8 @@ auto scenario_simple() -> bool
     auto output = FILESPATH + std::string("/output.xlsx");
     const auto inputFile{ FILESPATH + std::string("/scenario_simple.ts") };
     auto conv = ConverterFactory::make_converter(
-        ConverterFactory::ConversionType::Ts2Xlsx, inputFile.c_str(),
-        output.c_str(), ";", "\"", "2.1", true, false);
+        ConverterFactory::ConversionType::Ts2Xlsx, { inputFile.c_str(),
+        output.c_str(), ";", "\"", "2.1", true, false });
     conv->process();
 
     QXlsx::Document xlsx(output.c_str());
@@ -46,8 +46,8 @@ auto scenario_multiLocation() -> bool
     const auto inputFile{ FILESPATH +
                           std::string("/scenario_multilocation.ts") };
     auto conv = ConverterFactory::make_converter(
-        ConverterFactory::ConversionType::Ts2Xlsx, inputFile.c_str(),
-        output.c_str(), ";", "\"", "2.1", true, false);
+        ConverterFactory::ConversionType::Ts2Xlsx, { inputFile.c_str(),
+        output.c_str(), ";", "\"", "2.1", true, false });
     conv->process();
 
     QXlsx::Document xlsx(output.c_str());
@@ -84,8 +84,8 @@ auto scenario_ts_version() -> bool
         FILESPATH + std::string("/scenario_after_version_4_5_0.xlsx");
     const auto inputFile{ FILESPATH + std::string("/scenario_simple.ts") };
     auto conv = ConverterFactory::make_converter(
-        ConverterFactory::ConversionType::Ts2Xlsx, inputFile.c_str(),
-        output.c_str(), ";", "\"", "2.1");
+        ConverterFactory::ConversionType::Ts2Xlsx, { inputFile.c_str(),
+        output.c_str(), ";", "\"", "2.1" });
     conv->process();
 
     QXlsx::Document xlsxOutput(output.c_str());

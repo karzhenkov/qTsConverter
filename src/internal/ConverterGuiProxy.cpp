@@ -34,7 +34,7 @@ void ConverterGuiProxy::convert(QConversionType type, QStringList input,
         const auto o = multipleConversion ? out[i] : output;
 
         auto converter = ConverterFactory::make_converter(
-            convType, input[i], o, fieldSeparator, stringSeparator, tsVersion);
+            convType, { input[i], o, fieldSeparator, stringSeparator, tsVersion });
 
         const auto tmpResult = converter->process();
         if (!tmpResult.failed) {

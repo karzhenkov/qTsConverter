@@ -60,8 +60,11 @@ auto main(int argc, char **argv) -> int
 
     auto args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        CliRunner cli(std::move(args), parser.isSet(noVersion),
-                      parser.isSet(noLocation));
+        CliRunner cli(std::move(args), {
+            "", "", ";", "\"", "2.1",
+            parser.isSet(noVersion),
+            parser.isSet(noLocation)
+        });
         return cli.run();
 #ifdef ONLY_CLI
     } else {

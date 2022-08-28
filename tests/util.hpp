@@ -26,7 +26,7 @@ auto test_conversion(std::string &&input, std::string &&expect,
 
     const auto in = FILESPATH + std::string("/") + input;
     auto conv     = ConverterFactory::make_converter(
-        typeOfConvesion, in.c_str(), output.c_str(), ";", "\"", "2.1");
+        typeOfConvesion, { in.c_str(), output.c_str(), ";", "\"", "2.1" });
 
     conv->process();
 

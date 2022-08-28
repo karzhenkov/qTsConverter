@@ -55,31 +55,12 @@ auto ConverterFactory::fromString(const QString &suffixInput,
 }
 
 auto ConverterFactory::make_converter(ConverterFactory::ConversionType type,
-                                      const QString &in, const QString &out,
-                                      const QString &fieldSep,
-                                      const QString &stringSep,
-                                      const QString &tsVersion)
+                                      InOutParameter paramParser)
     -> std::unique_ptr<Converter>
 {
-    return make_converter(type, in, out, fieldSep, stringSep, tsVersion, false,
-                          false);
-}
-auto ConverterFactory::make_converter(ConverterFactory::ConversionType type,
-                                      const QString &in, const QString &out,
-                                      const QString &fieldSep,
-                                      const QString &stringSep,
-                                      const QString &tsVersion, bool noVersion,
-                                      bool noLocation)
-    -> std::unique_ptr<Converter>
-{
-    auto paramParser =
-        InOutParameter{ in,        out,
-                        tsVersion, CsvProperty{ stringSep, fieldSep },
-                        noVersion, noLocation };
-    auto paramBuilder =
-        InOutParameter{ in,        out,
-                        tsVersion, CsvProperty{ fieldSep, stringSep },
-                        noVersion, noLocation };
+    auto paramBuilder = paramParser;
+    paramBuilder.csvProperty.swap();
+
     switch (type) {
         case ConversionType::Ts2Csv:
             return std::make_unique<Converter>(

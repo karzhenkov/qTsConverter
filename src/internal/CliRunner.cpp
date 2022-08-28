@@ -5,8 +5,8 @@
 #include <QDir>
 #include <QtDebug>
 
-CliRunner::CliRunner(QStringList &&args, bool noVersion, bool noLocation) :
-    m_args{ args }, m_noVersion(noVersion), m_noLocation(noLocation)
+CliRunner::CliRunner(QStringList &&args, InOutParameter params) :
+    m_args{ args }, m_params(params)
 {
 }
 
@@ -26,8 +26,9 @@ auto CliRunner::run() -> int
 
     using CF        = ConverterFactory;
     const auto type = CF::fromString(getSuffix(input), getSuffix(output));
-    auto converter  = CF::make_converter(type, input, output, ";", "\"", "2.1",
-                                        m_noVersion, m_noLocation);
+    m_params.inputFile = input;
+    m_params.outputFile = output;
+    auto converter  = CF::make_converter(type, m_params);
 
     const auto tmpResult = converter->process();
     qInfo() << tmpResult.failed << tmpResult.message

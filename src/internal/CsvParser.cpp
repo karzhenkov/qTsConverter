@@ -28,7 +28,7 @@ auto CsvParser::parse() const -> Result
     const auto appVersion       = qApp->applicationVersion();
     const auto currentVersion   = QVersionNumber::fromString(appVersion);
     const auto TsSupportVersion = QVersionNumber(4, 5, 0);
-    InOutParameter p{ "", "", m_ioParameter.tsVersion, {} };
+    InOutParameter p{ m_ioParameter.tsVersion };
     if (QVersionNumber::compare(currentVersion, TsSupportVersion) >= 0) {
         list.pop_front();
         p.tsVersion = list.first().first();

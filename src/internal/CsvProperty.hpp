@@ -15,6 +15,10 @@ struct CsvProperty {
     CsvProperty &operator=(const CsvProperty &) = default;
     CsvProperty &operator=(CsvProperty &&) = default;
 
+    void swap() {
+    	std::swap(field_separator, string_separator);
+    }
+
     QString field_separator;
     QString string_separator;
 };
